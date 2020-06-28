@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QImage>
+#include <QtGui>
+#include <QtCore>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +20,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QImage * image;
+    QPainter * paintOnImage;
+
+protected:
+    void paintEvent(QPaintEvent *);
 };
 #endif // MAINWINDOW_H
