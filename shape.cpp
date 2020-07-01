@@ -57,14 +57,14 @@ void Shape::newShape()
         {           //small shapes 3x3
             if (rand()%100<tableShape3x3percent[randomCounter])
             {
-                isNotEndRandom=true;
+                isNotEndRandom=false;
             }
         }
         else
         {           //big shapes 4x4
             if (rand()%100<tableShape4x4percent[randomCounter-counterShape3x3])
             {
-                isNotEndRandom=true;
+                isNotEndRandom=false;
             }
         }
     }
@@ -72,7 +72,7 @@ void Shape::newShape()
     {
         for (short int i=0; i<9 ; i++)
         {
-            shape.push_back(tableShape3x3[i+9*counterShape3x3]);
+            shape.push_back(tableShape3x3[i+9*randomCounter]);
         }
     }
     else
@@ -84,7 +84,30 @@ void Shape::newShape()
     }
 }
 
-QVector <unsigned short int> Shape::getShape(unsigned short int rotation)
+QVector <unsigned short int> Shape::getShape()
 {
     return shape;
+}
+
+void Shape::rotateShape()   // 90 degree rotation / turn left
+{
+    unsigned short int row = shape.size()==9?3:4;
+    QVector <unsigned short int> shapeTemp;
+    // copy shape
+    for (unsigned short int y=0; y<row ; y++)
+    {
+        for (unsigned short int x=0; x<row ; x++)
+        {
+            shapeTemp.push_back(shape[row*y+x]);
+        }
+    }
+    shape.clear();
+    // rotate shape
+    for (unsigned short int y=0; y<row ; y++)
+    {
+        for (unsigned short int x=0; x<row ; x++)
+        {
+            shape.push_back(shapeTemp[row * x + row-1-y]);
+        }
+    }
 }

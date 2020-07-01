@@ -8,11 +8,12 @@ class Shape
 {
 public:
     Shape();
-    QVector <unsigned short int> getShape(unsigned short int rotation);   // 0 - zero, 1 - 90*, 2 - 180*, 3 - 270*
+    QVector <unsigned short int> getShape();
+    void rotateShape();                 // turn left
     void newShape();
 
 private:
-    QVector <unsigned short int> shape;                           // 0 - empty, 1 - stone, 2 - sand
+    QVector <unsigned short int> shape; // 0 - empty, 1 - stone, 2 - sand
     void clearShape();
 };
 

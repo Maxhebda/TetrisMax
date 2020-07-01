@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QtDebug>
+#include <shape.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,12 +21,28 @@ MainWindow::MainWindow(QWidget *parent)
     paintOnImage->begin(image);
     // --- add frame
     paintOnImage->drawRect(5,5,10*32,20*32);
-}
 
+//    Shape a;
+//    a.newShape();
+
+//    for (short i=0; i<a.getShape().size();)
+//    {
+//        if (a.getShape().size()==9)
+//        {
+//            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2];
+//            i+=3;
+//        }
+//        else
+//        {
+//            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2] << a.getShape()[i+3];
+//            i+=4;
+//        }
+//    }
+}
 MainWindow::~MainWindow()
 {
-    delete image;
     paintOnImage->end();
+    delete image;
     delete paintOnImage;
     delete ui;
 }
