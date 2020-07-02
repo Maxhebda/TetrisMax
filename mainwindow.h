@@ -5,6 +5,8 @@
 #include <QImage>
 #include <QtGui>
 #include <QtCore>
+#include <shape.h>
+#include <board.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +24,9 @@ private:
     Ui::MainWindow *ui;
     QImage * image;
     QPainter * paintOnImage;
+    Board board;
+    void showCell(unsigned short y, unsigned short x, unsigned short index);
+    void setPen(unsigned short int color);
 
 protected:
     void paintEvent(QPaintEvent *);
