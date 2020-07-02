@@ -14,6 +14,9 @@ public:
 
 private:
     QVector <unsigned short int> shape; // 0 - empty, 1 - stone, 2 - sand
+    unsigned short int x;
+    unsigned short int y;
+    bool direction;                     // shape rotate direction - true = right, false = left
     void clearShape();
 };
 

@@ -22,22 +22,36 @@ MainWindow::MainWindow(QWidget *parent)
     // --- add frame
     paintOnImage->drawRect(5,5,10*32,20*32);
 
-//    Shape a;
-//    a.newShape();
+    Shape a;
+    a.newShape();
 
-//    for (short i=0; i<a.getShape().size();)
-//    {
-//        if (a.getShape().size()==9)
-//        {
-//            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2];
-//            i+=3;
-//        }
-//        else
-//        {
-//            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2] << a.getShape()[i+3];
-//            i+=4;
-//        }
-//    }
+    for (short i=0; i<a.getShape().size();)
+    {
+        if (a.getShape().size()==9)
+        {
+            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2];
+            i+=3;
+        }
+        else
+        {
+            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2] << a.getShape()[i+3];
+            i+=4;
+        }
+    }
+    a.rotateShape();
+    for (short i=0; i<a.getShape().size();)
+    {
+        if (a.getShape().size()==9)
+        {
+            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2];
+            i+=3;
+        }
+        else
+        {
+            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2] << a.getShape()[i+3];
+            i+=4;
+        }
+    }
 }
 MainWindow::~MainWindow()
 {

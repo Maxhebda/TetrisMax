@@ -37,6 +37,7 @@ const unsigned short int tableShape4x4[counterShape3x3*16]=
 Shape::Shape()
 {
     srand(time(NULL));
+    direction = true;
 }
 
 void Shape::clearShape()
@@ -82,6 +83,9 @@ void Shape::newShape()
             shape.push_back(tableShape4x4[i+16*(randomCounter-counterShape3x3)]);
         }
     }
+    // new first shape position
+    y=0;
+    x=(10-((shape.size()==9)?3:4)) / 2;          // (10 - 3) / 2
 }
 
 QVector <unsigned short int> Shape::getShape()
@@ -101,13 +105,27 @@ void Shape::rotateShape()   // 90 degree rotation / turn left
             shapeTemp.push_back(shape[row*y+x]);
         }
     }
-    shape.clear();
-    // rotate shape
-    for (unsigned short int y=0; y<row ; y++)
+
+    if (direction)
     {
-        for (unsigned short int x=0; x<row ; x++)
+        // rotate shape right direction
+        for (unsigned short int y=0; y<row ; y++)
         {
-            shape.push_back(shapeTemp[row * x + row-1-y]);
+            for (unsigned short int x=0; x<row ; x++)
+            {
+                shape[row*x + y]=shapeTemp[row * (row-1-y) + x];
+            }
+        }
+    }
+    else
+    {
+        // rotate shape left direction
+        for (unsigned short int y=0; y<row ; y++)
+        {
+            for (unsigned short int x=0; x<row ; x++)
+            {
+                shape[row*x+y]=shapeTemp[row * y + row-1-x];
+            }
         }
     }
 }
