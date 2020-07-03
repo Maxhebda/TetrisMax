@@ -23,50 +23,26 @@ MainWindow::MainWindow(QWidget *parent)
     paintOnImage->drawRect(5,5,10*34-1,20*33+10);
     paintOnImage->drawRect(4,4,10*34+1,20*33+10);
     paintOnImage->fillRect(6,6,10*34-2,20*33+8, QColor(0,0,0));
-    Shape a;
-    a.newShape();
+    shape.newShape();
 
-    for (unsigned short int y=0; y<20 ; y++)
+    // tymczasowe wartosci dla planszy
+    board.setBoard(19,0,1);
+    board.setBoard(19,1,1);
+    board.setBoard(19,2,1);
+    board.setBoard(18,2,1);
+    board.setBoard(19,5,1);
+    board.setBoard(19,6,1);
+    board.setBoard(18,6,1);
+    board.setBoard(19,7,1);
+    for (int i = 0 ; i<10 ; i++)
     {
-        for (unsigned short int x=0; x<10 ; x++)
-        {
-            unsigned short int randC = rand()%10;
-            if (randC >= 5 && randC <= 8)
-                showCell(y,x,1);
-            if (randC < 5 )
-                showCell(y,x,0);
-            if (randC > 8)
-                showCell(y,x,2);
-        }
+        board.setBoard(0,i,2);
+        board.setBoard(1,i,2);
+        board.setBoard(2,i,2);
     }
 
-    //    for (short i=0; i<a.getShape().size();)
-    //    {
-    //        if (a.getShape().size()==9)
-    //        {
-    //            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2];
-    //            i+=3;
-    //        }
-    //        else
-    //        {
-    //            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2] << a.getShape()[i+3];
-    //            i+=4;
-    //        }
-    //    }
-    //    a.rotateShape();
-    //    for (short i=0; i<a.getShape().size();)
-    //    {
-    //        if (a.getShape().size()==9)
-    //        {
-    //            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2];
-    //            i+=3;
-    //        }
-    //        else
-    //        {
-    //            qDebug() << a.getShape()[i] << a.getShape()[i+1] << a.getShape()[i+2] << a.getShape()[i+3];
-    //            i+=4;
-    //        }
-    //    }
+    showBoard();
+    showShape();
 }
 MainWindow::~MainWindow()
 {
@@ -88,7 +64,7 @@ void MainWindow::showCell(unsigned short y, unsigned short x, unsigned short ind
 {
     if (index==0)
     {
-        paintOnImage->fillRect(10+33*x,10+33*y,32,32,QColor(0,0,0));
+        paintOnImage->fillRect(10+33*x,10+33*y,33,33,QColor(0,0,0));
         return;
     }
 
@@ -134,5 +110,60 @@ void MainWindow::setPen(unsigned short int color)
     switch (color) {
         case 0 : paintOnImage->setPen(QColor(0,0,255));break;
         case 1 : paintOnImage->setPen(QColor(200,0,100));break;
+    }
+}
+
+void MainWindow::showBoard()
+{
+    for (unsigned short int y=0; y<20 ; y++)
+    {
+        for (unsigned short int x=0; x<10 ; x++)
+        {
+            switch (board.getBoard(y,x)) {
+                case 0 :
+                {
+                    showCell(y,x,0);
+                    break;
+                }
+                case 1 :
+                {
+                    showCell(y,x,1);
+                    break;
+                }
+                case 2 :
+                {
+                    showCell(y,x,2);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
+void MainWindow::showShape()
+{
+    for (unsigned short int y=0; y<shape.row() ; y++)
+    {
+        for (unsigned short int x=0; x<shape.row() ; x++)
+        {
+            switch (shape.getShapeCell(y,x)) {
+                case 0 :
+                {
+//                    showCell(y + shape.y(),x + shape.x(),0);
+                    break;
+                }
+                case 1 :
+                {
+                    showCell(y + shape.y(),x + shape.x(),1);
+                    break;
+                }
+                case 2 :
+                {
+                    showCell(y + shape.y(),x + shape.x(),2);
+                    break;
+                }
+            }
+        }
     }
 }

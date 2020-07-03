@@ -25,7 +25,10 @@ private:
     QImage * image;
     QPainter * paintOnImage;
     Board board;
+    Shape shape;
     void showCell(unsigned short y, unsigned short x, unsigned short index);
+    void showBoard();
+    void showShape();
     void setPen(unsigned short int color);
 
 protected:

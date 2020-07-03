@@ -40,11 +40,6 @@ Shape::Shape()
     direction = true;
 }
 
-void Shape::clearShape()
-{
-    shape.clear();
-}
-
 void Shape::newShape()
 {
     bool isNotEndRandom=true;
@@ -71,6 +66,7 @@ void Shape::newShape()
     }
     if (randomCounter<counterShape3x3)
     {
+        lengthRow = 3;
         for (short int i=0; i<9 ; i++)
         {
             shape.push_back(tableShape3x3[i+9*randomCounter]);
@@ -78,14 +74,15 @@ void Shape::newShape()
     }
     else
     {
+        lengthRow = 4;
         for (short int i=0; i<16 ; i++)
         {
             shape.push_back(tableShape4x4[i+16*(randomCounter-counterShape3x3)]);
         }
     }
     // new first shape position
-    y=0;
-    x=(10-((shape.size()==9)?3:4)) / 2;          // (10 - 3) / 2
+    yPosition=0;
+    xPosition=(10-((shape.size()==9)?3:4)) / 2;          // (10 - 3) / 2
 }
 
 QVector <unsigned short int> Shape::getShape()
@@ -128,4 +125,24 @@ void Shape::rotateShape()   // 90 degree rotation / turn left
             }
         }
     }
+}
+
+unsigned short int Shape::row()
+{
+    return lengthRow;
+}
+
+unsigned short int Shape::getShapeCell(unsigned short int y, unsigned short int x)
+{
+    return shape[row() * y + x];
+}
+
+unsigned short int Shape::x()
+{
+    return xPosition;
+}
+
+unsigned short int Shape::y()
+{
+    return  yPosition;
 }
