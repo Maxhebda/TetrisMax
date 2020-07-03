@@ -30,10 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
     {
         for (unsigned short int x=0; x<10 ; x++)
         {
-            if (rand()%6==1)
+            unsigned short int randC = rand()%10;
+            if (randC >= 5 && randC <= 8)
                 showCell(y,x,1);
-            else
+            if (randC < 5 )
                 showCell(y,x,0);
+            if (randC > 8)
+                showCell(y,x,2);
         }
     }
 
@@ -83,26 +86,47 @@ void MainWindow::paintEvent(QPaintEvent * e)
 
 void MainWindow::showCell(unsigned short y, unsigned short x, unsigned short index)
 {
+    if (index==0)
+    {
+        paintOnImage->fillRect(10+33*x,10+33*y,32,32,QColor(0,0,0));
+        return;
+    }
+
+    // variable gradient
+    QRect myRect;
+    myRect.setX(13+33*x);
+    myRect.setY(13+33*y);
+    myRect.setWidth(27);
+    myRect.setHeight(27);
+    QLinearGradient gradient;
+
+    // frame
+    paintOnImage->setPen(QColor(100,100,100));
+    paintOnImage->drawRect(10+33*x,10+33*y,32,32);
+    paintOnImage->setPen(QColor(200,200,200));
+    paintOnImage->drawRect(11+33*x,11+33*y,30,30);
+    paintOnImage->setPen(QColor(255,255,255));
+    paintOnImage->drawRect(12+33*x,12+33*y,28,28);
+
     switch (index) {
-        case 0 :
-        {   //empty
-            paintOnImage->fillRect(10+33*x,10+33*y,32,32,QColor(0,0,0));break;
-        }
         case 1 :
-        {   //stone
-            paintOnImage->setPen(QColor(100,100,100));
-            paintOnImage->drawRect(10+33*x,10+33*y,32,32);
-            paintOnImage->setPen(QColor(200,200,200));
-            paintOnImage->drawRect(11+33*x,11+33*y,30,30);
-            paintOnImage->setPen(QColor(255,255,255));
-            paintOnImage->drawRect(12+33*x,12+33*y,28,28);
+        {
+            gradient.setStart(myRect.topLeft());
+            gradient.setFinalStop(myRect.bottomRight());
+            gradient.setColorAt(0, Qt::white);
+            gradient.setColorAt(1, Qt::red);
             break;
         }
         case 2 :
-        {   //sand
-
+        {
+            gradient.setStart(myRect.topRight());
+            gradient.setFinalStop(myRect.bottomRight());
+            gradient.setColorAt(0, Qt::black);
+            gradient.setColorAt(1, Qt::darkYellow);
+            break;
         }
     }
+    paintOnImage->fillRect(myRect, gradient);
 }
 
 void MainWindow::setPen(unsigned short int color)
