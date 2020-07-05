@@ -27,6 +27,7 @@
     <property name="title">
      <string>Gra</string>
     </property>
+    <addaction name="actionNowa_gra"/>
    </widget>
    <widget class="QMenu" name="menuInfo">
     <property name="title">
@@ -36,6 +37,11 @@
    <addaction name="menuGra"/>
    <addaction name="menuInfo"/>
   </widget>
+  <action name="actionNowa_gra">
+   <property name="text">
+    <string>Nowa gra</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -8,6 +8,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // -- set menu connections
+    connect(ui->actionNowa_gra,SIGNAL(triggered()), this, SLOT(clickNowaGra()));
+
+    // -- set shortCut connections
+    shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
+
+    // -- set timer connections
+    connect(&timer,SIGNAL(timeout()),this,SLOT(stepTimer()));
+    timer.setInterval(100);
+    timerCounter = 0;
+
     // --- set form size
     QWidget::setMinimumHeight(650+40+ui->menubar->height());
     QWidget::setMaximumHeight(650+40+ui->menubar->height());
@@ -47,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     paintOnImage->end();
+    delete shSPACE;
     delete image;
     delete paintOnImage;
     delete ui;
@@ -150,7 +162,7 @@ void MainWindow::showShape()
             switch (shape.getShapeCell(y,x)) {
                 case 0 :
                 {
-//                    showCell(y + shape.y(),x + shape.x(),0);
+                    //                    showCell(y + shape.y(),x + shape.x(),0);
                     break;
                 }
                 case 1 :
@@ -166,4 +178,35 @@ void MainWindow::showShape()
             }
         }
     }
+}
+
+void MainWindow::stepTimer()
+{
+    timerCounter++;
+    if (timerCounter == 10)
+    {
+        timerCounter = 0;
+        step();
+    }
+}
+
+void MainWindow::clickNowaGra()
+{
+    timer.start();
+}
+
+void MainWindow::step()
+{
+    shape.goDown();
+    showBoard();
+    showShape();
+    repaint();
+}
+
+void MainWindow::clickSpace()
+{
+    shape.rotateShape();
+    showBoard();
+    showShape();
+    repaint();
 }

@@ -15,6 +15,9 @@ public:
     unsigned short int row();           // length row
     unsigned short int x();
     unsigned short int y();
+    void goDown();
+    void goLeft();
+    void goRight();
 
 private:
     QVector <unsigned short int> shape; // 0 - empty, 1 - stone, 2 - sand

@@ -146,3 +146,18 @@ unsigned short int Shape::y()
 {
     return  yPosition;
 }
+
+void Shape::goDown()
+{
+    yPosition++;
+}
+
+void Shape::goLeft()
+{
+    xPosition--;
+}
+
+void Shape::goRight()
+{
+    xPosition++;
+}
