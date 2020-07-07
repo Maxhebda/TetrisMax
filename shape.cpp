@@ -125,6 +125,29 @@ void Shape::rotateShape()   // 90 degree rotation / turn left
             }
         }
     }
+
+    // move right
+    bool empty_column=true;
+    for (unsigned short int y=0; y<row; y++)
+    {
+        if (getShapeCell(y,0))
+        {
+            empty_column = false;
+        }
+    }
+    if (empty_column)
+    {
+        for (unsigned short int y=0; y<row ; y++)
+        {
+            for (unsigned short int x=0; x<row ; x++)
+            {
+                if (x<row-1)
+                    setShapeCell(y,x,getShapeCell(y,x+1));
+                else
+                    setShapeCell(y,x,0);
+            }
+        }
+    }
 }
 
 unsigned short int Shape::row()
@@ -137,6 +160,10 @@ unsigned short int Shape::getShapeCell(unsigned short int y, unsigned short int 
     return shape[row() * y + x];
 }
 
+void Shape::setShapeCell(unsigned short int y, unsigned short int x, unsigned short int i)
+{
+    shape[row() * y + x] = i;
+}
 unsigned short int Shape::x()
 {
     return xPosition;
