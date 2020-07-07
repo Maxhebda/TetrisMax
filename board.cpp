@@ -18,6 +18,7 @@ void Board::clearBoard()
 
 unsigned short int Board::getBoard(unsigned short y, unsigned short x)
 {
+    if (y<0 || y>19 || x<0 || x>9) return 1;
     return board[y][x];
 }
 

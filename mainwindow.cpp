@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // -- set shortCut connections
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
+    shRIGHT  = new QShortcut(QKeySequence(Qt::Key_Right),this,SLOT(clickRight()));
+    shLEFT  = new QShortcut(QKeySequence(Qt::Key_Left),this,SLOT(clickLeft()));
 
     // -- set timer connections
     connect(&timer,SIGNAL(timeout()),this,SLOT(stepTimer()));
@@ -37,6 +39,10 @@ MainWindow::MainWindow(QWidget *parent)
     shape.newShape();
 
     // tymczasowe wartosci dla planszy
+    board.setBoard(0,0,1);
+    board.setBoard(1,0,1);
+    board.setBoard(1,1,1);
+
     board.setBoard(19,0,1);
     board.setBoard(19,1,1);
     board.setBoard(19,2,1);
@@ -45,12 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     board.setBoard(19,6,1);
     board.setBoard(18,6,1);
     board.setBoard(19,7,1);
-    for (int i = 0 ; i<10 ; i++)
-    {
-        board.setBoard(0,i,2);
-        board.setBoard(1,i,2);
-        board.setBoard(2,i,2);
-    }
+
 
     showBoard();
     showShape();
@@ -59,6 +60,8 @@ MainWindow::~MainWindow()
 {
     paintOnImage->end();
     delete shSPACE;
+    delete shRIGHT;
+    delete shLEFT;
     delete image;
     delete paintOnImage;
     delete ui;
@@ -72,7 +75,7 @@ void MainWindow::paintEvent(QPaintEvent * e)
     painter.end();
 }
 
-void MainWindow::showCell(unsigned short y, unsigned short x, unsigned short index)
+void MainWindow::showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame)
 {
     if (index==0)
     {
@@ -89,9 +92,17 @@ void MainWindow::showCell(unsigned short y, unsigned short x, unsigned short ind
     QLinearGradient gradient;
 
     // frame
-    paintOnImage->setPen(QColor(100,100,100));
-    paintOnImage->drawRect(10+33*x,10+33*y,32,32);
-    paintOnImage->setPen(QColor(200,200,200));
+    if (blueFrame)
+    {
+        paintOnImage->setPen(Qt::blue);
+        paintOnImage->drawRect(10+33*x,10+33*y,32,32);
+    }
+    else
+    {
+        paintOnImage->setPen(QColor(100,100,100));
+        paintOnImage->drawRect(10+33*x,10+33*y,32,32);
+        paintOnImage->setPen(QColor(200,200,200));
+    }
     paintOnImage->drawRect(11+33*x,11+33*y,30,30);
     paintOnImage->setPen(QColor(255,255,255));
     paintOnImage->drawRect(12+33*x,12+33*y,28,28);
@@ -134,17 +145,17 @@ void MainWindow::showBoard()
             switch (board.getBoard(y,x)) {
                 case 0 :
                 {
-                    showCell(y,x,0);
+                    showCell(y,x,0,false);
                     break;
                 }
                 case 1 :
                 {
-                    showCell(y,x,1);
+                    showCell(y,x,1,false);
                     break;
                 }
                 case 2 :
                 {
-                    showCell(y,x,2);
+                    showCell(y,x,2,false);
                     break;
                 }
             }
@@ -167,12 +178,12 @@ void MainWindow::showShape()
                 }
                 case 1 :
                 {
-                    showCell(y + shape.y(),x + shape.x(),1);
+                    showCell(y + shape.y(),x + shape.x(),1, true);
                     break;
                 }
                 case 2 :
                 {
-                    showCell(y + shape.y(),x + shape.x(),2);
+                    showCell(y + shape.y(),x + shape.x(),2, true);
                     break;
                 }
             }
@@ -205,7 +216,72 @@ void MainWindow::step()
 
 void MainWindow::clickSpace()
 {
+    // -- check if the shape can be rotated
+    bool allowRotate = true;
+    for (unsigned short int y=0; y<shape.row() ; y++)
+    {
+        for (unsigned short int x=0; x<shape.row() ; x++)
+        {
+            if (board.getBoard(shape.y()+y, shape.x()+x)!=0)
+            {
+                allowRotate=false;
+            }
+        }
+    }
+    if (allowRotate==false)
+    {
+        return;
+    }
+
     shape.rotateShape();
+    showBoard();
+    showShape();
+    repaint();
+}
+
+void MainWindow::clickRight()
+{
+    bool allowRight = true;
+    for (unsigned short int y=0; y<shape.row(); y++)
+    {
+        for (unsigned short int x=0; x<shape.row(); x++)
+        {
+            if (shape.getShapeCell(y,x)!=0 && board.getBoard(shape.y()+y,shape.x()+x+1)!=0)
+            {
+                allowRight = false;
+            }
+        }
+    }
+    if (allowRight==false)
+    {
+        return;
+    }
+
+    shape.goRight();
+    showBoard();
+    showShape();
+    repaint();
+}
+
+void MainWindow::clickLeft()
+{
+    bool allowLeft = true;
+    for (unsigned short int y=0; y<shape.row(); y++)
+    {
+        for (unsigned short int x=0; x<shape.row(); x++)
+        {
+            if (shape.getShapeCell(y,x)!=0 && board.getBoard(shape.y()+y,shape.x()+x-1)!=0)
+            {
+                allowLeft = false;
+            }
+        }
+    }
+    if (allowLeft==false)
+    {
+        return;
+    }
+
+    shape.goLeft();
     showBoard();
     showShape();
     repaint();

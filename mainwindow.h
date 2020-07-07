@@ -33,10 +33,12 @@ private:
 
     // -- shortCut
     QShortcut * shSPACE;
+    QShortcut * shRIGHT;
+    QShortcut * shLEFT;
 
     Board board;
     Shape shape;
-    void showCell(unsigned short y, unsigned short x, unsigned short index);
+    void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
     void showBoard();
     void showShape();
     void setPen(unsigned short int color);
@@ -54,5 +56,7 @@ private slots:
 
     // -- shortCut
     void clickSpace();  // click key - rotate
+    void clickRight();
+    void clickLeft();
 };
 #endif // MAINWINDOW_H
