@@ -26,6 +26,7 @@ private:
     unsigned short int yPosition;
     bool direction;                     // shape rotate direction - true = right, false = left
     unsigned short int lengthRow;
+    uint8_t typeOfShape;    // 0 - other, 1 - point, 2 - line
 };
 
 #endif // SHAPE_H

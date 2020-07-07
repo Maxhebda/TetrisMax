@@ -49,6 +49,22 @@ void Shape::newShape()
     while (isNotEndRandom)
     {
         randomCounter = rand()%(counterShape3x3+counterShape4x4);
+
+        // -- type of shape (for rotate)
+        if (randomCounter==0)
+        {
+            typeOfShape=1;  //point
+        }
+        else
+            if (randomCounter==counterShape3x3)
+            {
+                typeOfShape=2; //line
+            }
+            else
+            {
+                typeOfShape=0; //other
+            }
+
         if (randomCounter<counterShape3x3)
         {           //small shapes 3x3
             if (rand()%100<tableShape3x3percent[randomCounter])
@@ -92,6 +108,10 @@ QVector <unsigned short int> Shape::getShape()
 
 void Shape::rotateShape()   // 90 degree rotation / turn left
 {
+    if (typeOfShape==1)     // if type of shape is point, exit
+    {
+        return;
+    }
     unsigned short int row = shape.size()==9?3:4;
     QVector <unsigned short int> shapeTemp;
     // copy shape
@@ -125,26 +145,109 @@ void Shape::rotateShape()   // 90 degree rotation / turn left
             }
         }
     }
+    // ----------------- end rotate --------------------------------
 
-    // move right
-    bool empty_column=true;
-    for (unsigned short int y=0; y<row; y++)
+    // all other type of shape
+    if (typeOfShape==0)
     {
-        if (getShapeCell(y,0))
+        // move left
+        bool empty_column=true;
+        for (unsigned short int y=0; y<row; y++)
         {
-            empty_column = false;
+            if (getShapeCell(y,0)!=0)   //first column
+            {
+                empty_column = false;
+                break;
+            }
+
+        }
+        if (empty_column)
+        {
+            for (unsigned short int y=0; y<row ; y++)
+            {
+                for (unsigned short int x=0; x<row ; x++)
+                {
+                    if (x<row-1)
+                        setShapeCell(y,x,getShapeCell(y,x+1));
+                    else
+                        setShapeCell(y,x,0);
+                }
+            }
+        }
+
+        // move up
+        empty_column=true;
+        for (unsigned short int x=0; x<row; x++)
+        {
+            if (getShapeCell(0,x)!=0)
+            {
+                empty_column = false;
+                break;
+            }
+        }
+        if (empty_column)
+        {
+            for (unsigned short int y=0; y<row ; y++)
+            {
+                for (unsigned short int x=0; x<row ; x++)
+                {
+                    if (y<row-1)
+                        setShapeCell(y,x,getShapeCell(y+1,x));
+                    else
+                        setShapeCell(y,x,0);
+                }
+            }
         }
     }
-    if (empty_column)
-    {
-        for (unsigned short int y=0; y<row ; y++)
+
+    // if type of shape is line 1x4
+    if (typeOfShape==2){
+        // second column is empty
+        bool empty_column=true;
+        for (unsigned short int y=0; y<row; y++)
         {
-            for (unsigned short int x=0; x<row ; x++)
+            if (getShapeCell(y,1)!=0)   //second column
             {
-                if (x<row-1)
-                    setShapeCell(y,x,getShapeCell(y,x+1));
-                else
-                    setShapeCell(y,x,0);
+                empty_column = false;
+                break;
+            }
+
+        }
+        if (empty_column)
+        {
+            for (unsigned short int y=0; y<row ; y++)
+            {
+                for (unsigned short int x=0; x<row ; x++)
+                {
+                    if (x<row-1)
+                        setShapeCell(y,x,getShapeCell(y,x+1));
+                    else
+                        setShapeCell(y,x,0);
+                }
+            }
+        }
+
+        // second row is empty
+        empty_column=true;
+        for (unsigned short int x=0; x<row; x++)
+        {
+            if (getShapeCell(1,x)!=0)   //second row
+            {
+                empty_column = false;
+                break;
+            }
+        }
+        if (empty_column)
+        {
+            for (unsigned short int y=0; y<row ; y++)
+            {
+                for (unsigned short int x=0; x<row ; x++)
+                {
+                    if (y<row-1)
+                        setShapeCell(y,x,getShapeCell(y+1,x));
+                    else
+                        setShapeCell(y,x,0);
+                }
             }
         }
     }
