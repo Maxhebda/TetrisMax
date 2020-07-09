@@ -14,8 +14,8 @@ public:
     void rotateShape();                 // turn left
     void newShape();
     unsigned short int row();           // length row
-    unsigned short int x();
-    unsigned short int y();
+    short int x();
+    short int y();
     void setX(unsigned short int);
     void goDown();
     void goLeft();

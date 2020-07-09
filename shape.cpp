@@ -272,12 +272,12 @@ void Shape::setShapeCell(unsigned short int y, unsigned short int x, unsigned sh
 {
     shape[row() * y + x] = i;
 }
-unsigned short int Shape::x()
+short int Shape::x()
 {
     return xPosition;
 }
 
-unsigned short int Shape::y()
+short int Shape::y()
 {
     return  yPosition;
 }
