@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     // -- set shortCut connections
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
     shRIGHT  = new QShortcut(QKeySequence(Qt::Key_Right),this,SLOT(clickRight()));
-    shLEFT  = new QShortcut(QKeySequence(Qt::Key_Left),this,SLOT(clickLeft()));
+    shLEFT   = new QShortcut(QKeySequence(Qt::Key_Left),this,SLOT(clickLeft()));
 
     // -- set timer connections
     connect(&timer,SIGNAL(timeout()),this,SLOT(stepTimer()));
@@ -39,9 +39,9 @@ MainWindow::MainWindow(QWidget *parent)
     shape.newShape();
 
     // tymczasowe wartosci dla planszy
-    board.setBoard(0,0,1);
-    board.setBoard(1,0,1);
-    board.setBoard(1,1,1);
+//    board.setBoard(0,0,1);
+//    board.setBoard(1,0,1);
+//    board.setBoard(1,1,1);
 
     board.setBoard(19,0,1);
     board.setBoard(19,1,1);
@@ -203,7 +203,11 @@ void MainWindow::stepTimer()
 
 void MainWindow::clickNowaGra()
 {
-    timer.start();
+//    timer.start();
+        board.setBoard(0,2,1);
+        showBoard();
+        showShape();
+        repaint();
 }
 
 void MainWindow::step()
@@ -216,13 +220,29 @@ void MainWindow::step()
 
 void MainWindow::clickSpace()
 {
-    // -- check if the shape can be rotated
+    if (shape.type()==1)                // shape is pionts
+    {
+        return;
+    }
+
     bool allowRotate = true;
+    unsigned short int tempX = shape.x();
+
+    // -- if the shape is out of range then move and check if it can be rotated
+    if (shape.x()+shape.row()>10)
+    {
+        tempX = 10 - shape.row();
+    }
+    if (shape.x()<0)
+    {
+        tempX = 0;
+    }
+
     for (unsigned short int y=0; y<shape.row() ; y++)
     {
         for (unsigned short int x=0; x<shape.row() ; x++)
         {
-            if (board.getBoard(shape.y()+y, shape.x()+x)!=0)
+            if (board.getBoard(shape.y()+y, tempX+x)!=0)
             {
                 allowRotate=false;
             }
@@ -233,6 +253,7 @@ void MainWindow::clickSpace()
         return;
     }
 
+    shape.setX(tempX);
     shape.rotateShape();
     showBoard();
     showShape();

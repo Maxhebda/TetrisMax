@@ -106,6 +106,11 @@ QVector <unsigned short int> Shape::getShape()
     return shape;
 }
 
+unsigned short int Shape::type()
+{
+    return typeOfShape;
+}
+
 void Shape::rotateShape()   // 90 degree rotation / turn left
 {
     if (typeOfShape==1)     // if type of shape is point, exit
@@ -290,4 +295,9 @@ void Shape::goLeft()
 void Shape::goRight()
 {
     xPosition++;
+}
+
+void Shape::setX(unsigned short newX)
+{
+    xPosition = newX;
 }
