@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
     shRIGHT  = new QShortcut(QKeySequence(Qt::Key_Right),this,SLOT(clickRight()));
     shLEFT   = new QShortcut(QKeySequence(Qt::Key_Left),this,SLOT(clickLeft()));
-        shLEFT   = new QShortcut(QKeySequence(Qt::Key_Down),this,SLOT(clickDown()));
+    shLEFT   = new QShortcut(QKeySequence(Qt::Key_Down),this,SLOT(clickDown()));
 
     // -- set timer connections
     connect(&timer,SIGNAL(timeout()),this,SLOT(stepTimer()));
@@ -222,13 +222,22 @@ void MainWindow::step()
     }
     if (allowDown==false)
     {
-        return;
+        merge();    // merge the board and shape
+        shape.newShape();
+    }
+    else
+    {
+        shape.goDown();
     }
 
-    shape.goDown();
     showBoard();
     showShape();
     repaint();
+}
+
+void MainWindow::merge()        // merge the board and shape
+{
+
 }
 
 void MainWindow::clickSpace()

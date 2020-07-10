@@ -45,6 +45,7 @@ private:
     void showShape();
     void setPen(unsigned short int color);
     void step();
+    void merge();       // merge the board and shape
 
 protected:
     void paintEvent(QPaintEvent *);
