@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
     shRIGHT  = new QShortcut(QKeySequence(Qt::Key_Right),this,SLOT(clickRight()));
     shLEFT   = new QShortcut(QKeySequence(Qt::Key_Left),this,SLOT(clickLeft()));
+        shLEFT   = new QShortcut(QKeySequence(Qt::Key_Down),this,SLOT(clickDown()));
 
     // -- set timer connections
     connect(&timer,SIGNAL(timeout()),this,SLOT(stepTimer()));
@@ -39,10 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     shape.newShape();
 
     // tymczasowe wartosci dla planszy
-//    board.setBoard(0,0,1);
-//    board.setBoard(1,0,1);
-//    board.setBoard(1,1,1);
-
     board.setBoard(19,0,1);
     board.setBoard(19,1,1);
     board.setBoard(19,2,1);
@@ -52,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     board.setBoard(18,6,1);
     board.setBoard(19,7,1);
 
-
+    isFirstStart = true;
     showBoard();
     showShape();
 }
@@ -203,15 +200,31 @@ void MainWindow::stepTimer()
 
 void MainWindow::clickNowaGra()
 {
-//    timer.start();
-        board.setBoard(0,2,1);
-        showBoard();
-        showShape();
-        repaint();
+    //    timer.start();
+    board.setBoard(0,2,1);
+    showBoard();
+    showShape();
+    repaint();
 }
 
 void MainWindow::step()
 {
+    bool allowDown = true;
+    for (unsigned short int y=0; y<shape.row(); y++)
+    {
+        for (unsigned short int x=0; x<shape.row(); x++)
+        {
+            if (shape.getShapeCell(y,x)!=0 && board.getBoard(shape.y()+y+1,shape.x()+x)!=0)
+            {
+                allowDown = false;
+            }
+        }
+    }
+    if (allowDown==false)
+    {
+        return;
+    }
+
     shape.goDown();
     showBoard();
     showShape();
@@ -220,6 +233,12 @@ void MainWindow::step()
 
 void MainWindow::clickSpace()
 {
+    if (isFirstStart)
+    {
+        timer.start();
+        isFirstStart=false;
+    }
+
     if (shape.type()==1)                // shape is pionts
     {
         return;
@@ -306,4 +325,9 @@ void MainWindow::clickLeft()
     showBoard();
     showShape();
     repaint();
+}
+
+void MainWindow::clickDown()
+{
+    step();
 }
