@@ -195,6 +195,14 @@ void MainWindow::showShape()
 void MainWindow::stepTimer()
 {
     timerCounter++;
+    if (timerCounter%2==0)
+    {
+        calculate();
+    }
+    if (gameover)
+    {
+        return;
+    }
     if (timerCounter == 10)
     {
         timerCounter = 0;
@@ -215,6 +223,10 @@ void MainWindow::clickNowaGra()
 
 void MainWindow::step()
 {
+    if (gameover)
+    {
+        return;
+    }
     bool allowDown = true;
     for (unsigned short int y=0; y<shape.row(); y++)
     {
@@ -268,6 +280,32 @@ void MainWindow::merge()        // merge the board and shape
                 board.setBoard(shape.y()+y,shape.x()+x,shape.getShapeCell(y,x));
             }
         }
+    }
+}
+
+void MainWindow::calculate()
+{
+    bool isCalculate = false;
+    for (unsigned short int y=18; y>0; y--)
+    {
+        for (unsigned short int x=0; x<10; x++)
+        {
+            if (board.getBoard(y,x)==2)     // if is sand
+            {
+                if (board.getBoard(y+1,x)==0)
+                {
+                    board.setBoard(y,x,0);
+                    board.setBoard(y+1,x,2);
+                    isCalculate = true;
+                }
+            }
+        }
+    }
+    if (isCalculate)
+    {
+        showBoard();
+        showShape();
+        repaint();
     }
 }
 

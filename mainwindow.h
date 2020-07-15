@@ -48,6 +48,7 @@ private:
     void setPen(unsigned short int color);
     void step();
     void merge();       // merge the board and shape
+    void calculate();   // calculate the board. whether the sand is to fall and when there are whole rows.
 
 protected:
     void paintEvent(QPaintEvent *);
