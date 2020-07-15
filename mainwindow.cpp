@@ -237,7 +237,16 @@ void MainWindow::step()
 
 void MainWindow::merge()        // merge the board and shape
 {
-
+    for (unsigned short int y=0; y<shape.row(); y++)
+    {
+        for (unsigned short int x=0; x<shape.row(); x++)
+        {
+            if (shape.getShapeCell(y,x)!=0)
+            {
+                board.setBoard(shape.y()+y,shape.x()+x,shape.getShapeCell(y,x));
+            }
+        }
+    }
 }
 
 void MainWindow::clickSpace()
