@@ -36,8 +36,10 @@ private:
     QShortcut * shRIGHT;
     QShortcut * shLEFT;
     QShortcut * shDOWN;
+    QShortcut * shESC;
 
     bool isFirstStart;  // whether running for the first time
+    bool gameover;
     Board board;
     Shape shape;
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
@@ -62,5 +64,6 @@ private slots:
     void clickRight();
     void clickLeft();
     void clickDown();
+    void clickEsc();    // pause
 };
 #endif // MAINWINDOW_H

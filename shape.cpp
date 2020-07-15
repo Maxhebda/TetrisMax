@@ -85,7 +85,21 @@ void Shape::newShape()
         lengthRow = 3;
         for (short int i=0; i<9 ; i++)
         {
-            shape.push_back(tableShape3x3[i+9*randomCounter]);
+            if (tableShape3x3[i+9*randomCounter]==1)
+            {
+                if (rand()%10>6)
+                {
+                    shape.push_back(2);
+                }
+                else
+                {
+                    shape.push_back(1);
+                }
+            }
+            else
+            {
+                shape.push_back(0);
+            }
         }
     }
     else
@@ -93,7 +107,21 @@ void Shape::newShape()
         lengthRow = 4;
         for (short int i=0; i<16 ; i++)
         {
-            shape.push_back(tableShape4x4[i+16*(randomCounter-counterShape3x3)]);
+            if (tableShape4x4[i+16*(randomCounter-counterShape3x3)]==1)
+            {
+                if (rand()%10>6)
+                {
+                    shape.push_back(2);
+                }
+                else
+                {
+                    shape.push_back(1);
+                }
+            }
+            else
+            {
+            shape.push_back(0);
+            }
         }
     }
     // new first shape position

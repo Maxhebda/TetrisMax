@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
     shRIGHT  = new QShortcut(QKeySequence(Qt::Key_Right),this,SLOT(clickRight()));
     shLEFT   = new QShortcut(QKeySequence(Qt::Key_Left),this,SLOT(clickLeft()));
-    shLEFT   = new QShortcut(QKeySequence(Qt::Key_Down),this,SLOT(clickDown()));
+    shDOWN   = new QShortcut(QKeySequence(Qt::Key_Down),this,SLOT(clickDown()));
+    shESC   = new QShortcut(QKeySequence(Qt::Key_Escape),this,SLOT(clickEsc()));
 
     // -- set timer connections
     connect(&timer,SIGNAL(timeout()),this,SLOT(stepTimer()));
@@ -50,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     board.setBoard(19,7,1);
 
     isFirstStart = true;
+    gameover = false;
     showBoard();
     showShape();
 }
@@ -59,6 +61,8 @@ MainWindow::~MainWindow()
     delete shSPACE;
     delete shRIGHT;
     delete shLEFT;
+    delete shDOWN;
+    delete shESC;
     delete image;
     delete paintOnImage;
     delete ui;
@@ -200,8 +204,10 @@ void MainWindow::stepTimer()
 
 void MainWindow::clickNowaGra()
 {
-    //    timer.start();
-    board.setBoard(0,2,1);
+    gameover = false;
+    board.clearBoard();
+    shape.newShape();
+    timer.start();
     showBoard();
     showShape();
     repaint();
@@ -224,15 +230,31 @@ void MainWindow::step()
     {
         merge();    // merge the board and shape
         shape.newShape();
+
+        //---- its gameover?
+        for (unsigned short int y=0; y<shape.row(); y++)
+        {
+            for (unsigned short int x=0; x<shape.row(); x++)
+            {
+                if (shape.getShapeCell(y,x)!=0 && board.getBoard(shape.y()+y,shape.x()+x)!=0)
+                {
+                    // gameover
+                    gameover = true;
+                }
+            }
+        }
     }
     else
     {
         shape.goDown();
     }
 
-    showBoard();
-    showShape();
-    repaint();
+    if (gameover==false)
+    {
+        showBoard();
+        showShape();
+        repaint();
+    }
 }
 
 void MainWindow::merge()        // merge the board and shape
@@ -251,10 +273,11 @@ void MainWindow::merge()        // merge the board and shape
 
 void MainWindow::clickSpace()
 {
-    if (isFirstStart)
+    if (timer.isActive()==false)
     {
         timer.start();
         isFirstStart=false;
+        return;
     }
 
     if (shape.type()==1)                // shape is pionts
@@ -347,5 +370,17 @@ void MainWindow::clickLeft()
 
 void MainWindow::clickDown()
 {
-    step();
+    if (timer.isActive())
+    {
+        step();
+    }
+    else
+    {
+        timer.start();
+    }
+}
+
+void MainWindow::clickEsc()
+{
+    timer.stop();
 }
