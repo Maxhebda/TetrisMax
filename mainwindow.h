@@ -9,6 +9,7 @@
 #include <board.h>
 #include <QTimer>
 #include <QShortcut>
+#include <mysounds.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,6 +44,7 @@ private:
     bool pause;
     Board board;
     Shape shape;
+    MySounds sound;
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
     void showBoard();
     void showShape();

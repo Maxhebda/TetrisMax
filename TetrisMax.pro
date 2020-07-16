@@ -1,5 +1,5 @@
-QT       += core gui
-
+QT       += core gui \
+         multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -19,12 +19,15 @@ SOURCES += \
     board.cpp \
     main.cpp \
     mainwindow.cpp \
+    mysounds.cpp \
     shape.cpp
 
 HEADERS += \
     board.h \
     mainwindow.h \
+    mysounds.h \
     shape.h
+
 
 FORMS += \
     mainwindow.ui
@@ -35,4 +38,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RC_FILE = img/icon.rc
+
+RESOURCES += \
+    res.qrc
 

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sounds/click.wav</file>
+        <file>sounds/gameover.wav</file>
+        <file>sounds/pause.wav</file>
+        <file>sounds/rotate.wav</file>
+        <file>sounds/row.wav</file>
+        <file>sounds/sand.wav</file>
+        <file>sounds/shape.wav</file>
+    </qresource>
+</RCC>

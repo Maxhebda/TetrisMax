@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QtDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -260,6 +259,7 @@ void MainWindow::step()
     }
     if (allowDown==false)
     {
+        sound.click();
         merge();    // merge the board and shape
         shape.newShape();
 
@@ -272,21 +272,20 @@ void MainWindow::step()
                 {
                     // gameover
                     gameover = true;
+                    sound.gameover();
                 }
             }
         }
     }
     else
     {
+        sound.shape();
         shape.goDown();
     }
 
-    if (gameover==false)
-    {
         showBoard();
         showShape();
         repaint();
-    }
 }
 
 void MainWindow::merge()        // merge the board and shape
@@ -306,6 +305,8 @@ void MainWindow::merge()        // merge the board and shape
 void MainWindow::calculate()
 {
     bool isCalculate = false;
+    bool isSand = false;
+    bool isRow = false;
     //checking individual points
     for (unsigned short int y=18; y>0; y--)
     {
@@ -318,6 +319,7 @@ void MainWindow::calculate()
                     board.setBoard(y,x,0);
                     board.setBoard(y+1,x,2);
                     isCalculate = true;
+                    isSand = true;
                 }
             }
         }
@@ -338,6 +340,7 @@ void MainWindow::calculate()
         if (isFullRow)
         {
             isCalculate = true;
+            isRow = true;
             for (unsigned short int y2=y; y2>0; y2--)
             {
                 for (unsigned short int x=0; x<10; x++)
@@ -350,6 +353,14 @@ void MainWindow::calculate()
 
     if (isCalculate)
     {
+        if (isSand)
+        {
+            sound.sand();
+        }
+        if (isRow)
+        {
+            sound.row();
+        }
         showBoard();
         showShape();
         repaint();
@@ -399,6 +410,7 @@ void MainWindow::clickSpace()
         return;
     }
 
+    sound.rotate();
     shape.setX(tempX);
     shape.rotateShape();
     showBoard();
@@ -456,8 +468,13 @@ void MainWindow::clickLeft()
 
 void MainWindow::clickDown()
 {
+    if (gameover)
+    {
+        return;
+    }
     if (timer.isActive())
     {
+        sound.shape();
         step();
     }
     else
@@ -469,6 +486,10 @@ void MainWindow::clickDown()
 
 void MainWindow::clickEsc()
 {
+    if (gameover)
+    {
+        return;
+    }
     if (pause)
     {
         timer.start();
@@ -477,6 +498,7 @@ void MainWindow::clickEsc()
     else
     {
         timer.stop();
+        sound.pause();
         pause = true;
     }
     showBoard();
