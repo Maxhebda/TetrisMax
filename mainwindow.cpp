@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // -- set timer connections
     connect(&timer,SIGNAL(timeout()),this,SLOT(stepTimer()));
-    timer.setInterval(100);
+    timer.setInterval(50);
     timerCounter = 0;
 
     // --- set form size
@@ -199,11 +199,11 @@ void MainWindow::stepTimer()
     {
         calculate();
     }
-    if (gameover)
-    {
-        return;
-    }
-    if (timerCounter == 10)
+    //    if (gameover)
+    //    {
+    //        return;
+    //    }
+    if (timerCounter == 20)
     {
         timerCounter = 0;
         step();
@@ -286,6 +286,7 @@ void MainWindow::merge()        // merge the board and shape
 void MainWindow::calculate()
 {
     bool isCalculate = false;
+    //checking individual points
     for (unsigned short int y=18; y>0; y--)
     {
         for (unsigned short int x=0; x<10; x++)
@@ -301,6 +302,32 @@ void MainWindow::calculate()
             }
         }
     }
+
+    //checking the rows
+    bool isFullRow;
+    for (unsigned short int y=19; y>0; y--)
+    {
+        isFullRow = true;
+        for (unsigned short int x=0; x<10; x++)
+        {
+            if (board.getBoard(y,x)==0 || (board.getBoard(y,x)==2 && board.getBoard(y+1,x)==0))
+            {
+                isFullRow = false;
+            }
+        }
+        if (isFullRow)
+        {
+            isCalculate = true;
+            for (unsigned short int y2=y; y2>0; y2--)
+            {
+                for (unsigned short int x=0; x<10; x++)
+                {
+                    board.setBoard(y2,x,board.getBoard(y2-1,x));
+                }
+            }
+        }
+    }
+
     if (isCalculate)
     {
         showBoard();
