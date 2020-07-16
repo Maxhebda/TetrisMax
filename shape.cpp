@@ -1,8 +1,8 @@
 #include "shape.h"
 
-const unsigned short int counterShape3x3 = 6;
+const unsigned short int counterShape3x3 = 8;
 const unsigned short int counterShape4x4 = 1;
-const unsigned short int tableShape3x3percent[counterShape3x3]={100,100,100,100,100,100};
+const unsigned short int tableShape3x3percent[counterShape3x3]={50,100,100,100,100,100,30,20};
 const unsigned short int tableShape4x4percent[counterShape4x4]={100};
 const unsigned short int tableShape3x3[counterShape3x3*9]=
 {    0,0,0,
@@ -27,6 +27,14 @@ const unsigned short int tableShape3x3[counterShape3x3*9]=
 
      1,0,0,
      1,1,1,
+     0,0,0,
+
+     1,1,0,
+     1,1,0,
+     0,0,0,
+
+     1,1,0,
+     1,0,0,
      0,0,0};
 const unsigned short int tableShape4x4[counterShape3x3*16]=
 {   0,0,0,0,
@@ -120,7 +128,7 @@ void Shape::newShape()
             }
             else
             {
-            shape.push_back(0);
+                shape.push_back(0);
             }
         }
     }

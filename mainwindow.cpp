@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     isFirstStart = true;
     gameover = false;
+    pause = false;
     showBoard();
     showShape();
 }
@@ -137,6 +138,14 @@ void MainWindow::setPen(unsigned short int color)
     }
 }
 
+void MainWindow::showInformation(QString information)
+{
+    const QRect rectangle = QRect(80, 270, 185, 50);
+    paintOnImage->fillRect(rectangle,QColor(055,055,055));
+    paintOnImage->setPen(QColor(255,255,255));
+    paintOnImage->drawText(rectangle,Qt::AlignCenter, information);
+}
+
 void MainWindow::showBoard()
 {
     for (unsigned short int y=0; y<20 ; y++)
@@ -190,6 +199,16 @@ void MainWindow::showShape()
             }
         }
     }
+
+    if (gameover)
+    {
+        showInformation("Koniec gry!\nGameOver");
+    }
+
+    if (pause)
+    {
+        showInformation("Pauza\nNaciśnij spację");
+    }
 }
 
 void MainWindow::stepTimer()
@@ -213,6 +232,7 @@ void MainWindow::stepTimer()
 void MainWindow::clickNowaGra()
 {
     gameover = false;
+    pause = false;
     board.clearBoard();
     shape.newShape();
     timer.start();
@@ -341,7 +361,8 @@ void MainWindow::clickSpace()
     if (timer.isActive()==false)
     {
         timer.start();
-        isFirstStart=false;
+        isFirstStart = false;
+        pause = false;
         return;
     }
 
@@ -442,10 +463,23 @@ void MainWindow::clickDown()
     else
     {
         timer.start();
+        pause = false;
     }
 }
 
 void MainWindow::clickEsc()
 {
-    timer.stop();
+    if (pause)
+    {
+        timer.start();
+        pause = false;
+    }
+    else
+    {
+        timer.stop();
+        pause = true;
+    }
+    showBoard();
+    showShape();
+    repaint();
 }

@@ -40,11 +40,13 @@ private:
 
     bool isFirstStart;  // whether running for the first time
     bool gameover;
+    bool pause;
     Board board;
     Shape shape;
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
     void showBoard();
     void showShape();
+    void showInformation(QString information);
     void setPen(unsigned short int color);
     void step();
     void merge();       // merge the board and shape
