@@ -20,12 +20,16 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mysounds.cpp \
+    scores.cpp \
+    scorescell.cpp \
     shape.cpp
 
 HEADERS += \
     board.h \
     mainwindow.h \
     mysounds.h \
+    scores.h \
+    scorescell.h \
     shape.h
 
 

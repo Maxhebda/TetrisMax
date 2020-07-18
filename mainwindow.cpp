@@ -182,7 +182,7 @@ void MainWindow::showShape()
             switch (shape.getShapeCell(y,x)) {
                 case 0 :
                 {
-                    //                    showCell(y + shape.y(),x + shape.x(),0);
+                    // showCell(y + shape.y(),x + shape.x(),0);
                     break;
                 }
                 case 1 :
