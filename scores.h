@@ -4,12 +4,12 @@
 #include <QVector>
 struct oneScore
 {
-    short int x;
-    short int y;
+    double x;
+    double y;
     QString value;
-    short int speedX;
-    short int speedY;
-    unsigned short int gravity;
+    double speedX;
+    double speedY;
+    double gravity;
     unsigned short int lengthLive;
     unsigned short int live;
 };
@@ -20,6 +20,11 @@ public:
     Scores();
     void add(short int y, short int x, QString value);
     unsigned short int size();
+    void go();
+
+    unsigned short int getX(unsigned short int index);
+    unsigned short int getY(unsigned short int index);
+    QString getValue(unsigned short int index);
 private:
     QVector <oneScore> score;
 };

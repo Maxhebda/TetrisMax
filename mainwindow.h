@@ -50,11 +50,14 @@ private:
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
     void showBoard();
     void showShape();
+    void showScores();
     void showInformation(QString information);
     void setPen(unsigned short int color);
     void step();
     void merge();       // merge the board and shape
     void calculate();   // calculate the board. whether the sand is to fall and when there are whole rows.
+    void calculateScores(); // calculate the scores (show 100 etc)
+    bool isEndOfFalling(unsigned short y, unsigned short x);
 
 protected:
     void paintEvent(QPaintEvent *);

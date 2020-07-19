@@ -210,9 +210,23 @@ void MainWindow::showShape()
     }
 }
 
+void MainWindow::showScores()
+{
+    if (score.size()==0)
+    {
+        return;
+    }
+    for(unsigned short int iter = 0; iter<score.size(); iter++)
+    {
+        paintOnImage->setPen(QColor(255,255,255));
+        paintOnImage->drawText(score.getX(iter), score.getY(iter), score.getValue(iter));
+    }
+}
+
 void MainWindow::stepTimer()
 {
     timerCounter++;
+    calculateScores();
     if (timerCounter%2==0)
     {
         calculate();
@@ -234,6 +248,7 @@ void MainWindow::clickNowaGra()
     timer.start();
     showBoard();
     showShape();
+    showScores();
     repaint();
 }
 
@@ -282,6 +297,7 @@ void MainWindow::step()
 
     showBoard();
     showShape();
+    showScores();
     repaint();
 }
 
@@ -297,6 +313,24 @@ void MainWindow::merge()        // merge the board and shape
             }
         }
     }
+}
+
+bool MainWindow::isEndOfFalling(unsigned short y, unsigned short x)
+{
+    for (unsigned short int i = y+1; i<20; i++)
+    {
+        if (board.getBoard(i,x)==0)
+        {
+            return false;
+        }
+        else
+            if (board.getBoard(i,x)==1)
+            {
+                return true;
+                break;
+            }
+    }
+    return true;
 }
 
 void MainWindow::calculate()
@@ -315,9 +349,9 @@ void MainWindow::calculate()
                 {
                     board.setBoard(y,x,0);
                     board.setBoard(y+1,x,2);
-                    if (board.getBoard(y+2,x)!=0)   // if next y --> add score
+                    if (isEndOfFalling(y+1,x))
                     {
-                        score.add(y,x,"100");
+                        score.add(y+1,x,"100");
                     }
                     isCalculate = true;
                     isSand = true;
@@ -340,6 +374,7 @@ void MainWindow::calculate()
         }
         if (isFullRow)
         {
+            score.add(y,5,"800");
             isCalculate = true;
             isRow = true;
             for (unsigned short int y2=y; y2>0; y2--)
@@ -364,8 +399,18 @@ void MainWindow::calculate()
         }
         showBoard();
         showShape();
+        showScores();
         repaint();
     }
+}
+
+void MainWindow::calculateScores()
+{
+    score.go();
+    showBoard();
+    showShape();
+    showScores();
+    repaint();
 }
 
 void MainWindow::clickSpace()
@@ -416,6 +461,7 @@ void MainWindow::clickSpace()
     shape.rotateShape();
     showBoard();
     showShape();
+    showScores();
     repaint();
 }
 
@@ -440,6 +486,7 @@ void MainWindow::clickRight()
     shape.goRight();
     showBoard();
     showShape();
+    showScores();
     repaint();
 }
 
@@ -464,6 +511,7 @@ void MainWindow::clickLeft()
     shape.goLeft();
     showBoard();
     showShape();
+    showScores();
     repaint();
 }
 
@@ -504,5 +552,6 @@ void MainWindow::clickEsc()
     }
     showBoard();
     showShape();
+    showScores();
     repaint();
 }
