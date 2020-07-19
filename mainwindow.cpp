@@ -217,10 +217,7 @@ void MainWindow::stepTimer()
     {
         calculate();
     }
-    //    if (gameover)
-    //    {
-    //        return;
-    //    }
+
     if (timerCounter == 20)
     {
         timerCounter = 0;
@@ -283,9 +280,9 @@ void MainWindow::step()
         shape.goDown();
     }
 
-        showBoard();
-        showShape();
-        repaint();
+    showBoard();
+    showShape();
+    repaint();
 }
 
 void MainWindow::merge()        // merge the board and shape
@@ -318,6 +315,10 @@ void MainWindow::calculate()
                 {
                     board.setBoard(y,x,0);
                     board.setBoard(y+1,x,2);
+                    if (board.getBoard(y+2,x)!=0)   // if next y --> add score
+                    {
+                        score.add(y,x,"100");
+                    }
                     isCalculate = true;
                     isSand = true;
                 }

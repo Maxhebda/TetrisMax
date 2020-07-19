@@ -21,7 +21,6 @@ SOURCES += \
     mainwindow.cpp \
     mysounds.cpp \
     scores.cpp \
-    scorescell.cpp \
     shape.cpp
 
 HEADERS += \
@@ -29,7 +28,6 @@ HEADERS += \
     mainwindow.h \
     mysounds.h \
     scores.h \
-    scorescell.h \
     shape.h
 
 
