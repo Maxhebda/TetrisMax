@@ -1,6 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+// QString mySprintf(format, arguments);
+template<typename ... Args>
+QString mySprintf(const char * format,Args ... a)
+{
+    char scream[255];
+    sprintf(scream,format,a ...);
+    return scream;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -52,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     isFirstStart = true;
     gameover = false;
     pause = false;
+    pointScore = 0;
     showBoard();
     showShape();
 }
@@ -221,6 +231,7 @@ void MainWindow::showScores()
         paintOnImage->setPen(QColor(255,255,255));
         paintOnImage->drawText(score.getX(iter), score.getY(iter), score.getValue(iter));
     }
+    ui->label_2->setText(mySprintf("%d",pointScore));
 }
 
 void MainWindow::stepTimer()
@@ -243,6 +254,7 @@ void MainWindow::clickNowaGra()
 {
     gameover = false;
     pause = false;
+    pointScore = 0;
     board.clearBoard();
     shape.newShape();
     timer.start();
@@ -352,6 +364,7 @@ void MainWindow::calculate()
                     if (isEndOfFalling(y+1,x))
                     {
                         score.add(y+1,x,"100");
+                        pointScore+=100;
                     }
                     isCalculate = true;
                     isSand = true;
@@ -375,6 +388,7 @@ void MainWindow::calculate()
         if (isFullRow)
         {
             score.add(y,5,"800");
+            pointScore+=800;
             isCalculate = true;
             isRow = true;
             for (unsigned short int y2=y; y2>0; y2--)

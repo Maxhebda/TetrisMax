@@ -47,6 +47,7 @@ private:
     Shape shape;
     MySounds sound;
     Scores score;
+    unsigned short int pointScore;
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
     void showBoard();
     void showShape();
