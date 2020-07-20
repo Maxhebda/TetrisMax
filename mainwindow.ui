@@ -70,7 +70,18 @@
     <property name="title">
      <string>Gra</string>
     </property>
+    <widget class="QMenu" name="menuStopienTrudnosci">
+     <property name="title">
+      <string>Stopień trudności</string>
+     </property>
+     <addaction name="action_Latwa"/>
+     <addaction name="actionTrudnaUP"/>
+     <addaction name="actionTrudnaMove"/>
+     <addaction name="actionUpiorny"/>
+    </widget>
     <addaction name="actionNowa_gra"/>
+    <addaction name="separator"/>
+    <addaction name="menuStopienTrudnosci"/>
    </widget>
    <widget class="QMenu" name="menuInfo">
     <property name="title">
@@ -83,6 +94,44 @@
   <action name="actionNowa_gra">
    <property name="text">
     <string>Nowa gra</string>
+   </property>
+  </action>
+  <action name="action_Latwa">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Łatwa</string>
+   </property>
+  </action>
+  <action name="actionTrudnaUP">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Trudna (podnoszenie bloków)</string>
+   </property>
+  </action>
+  <action name="actionTrudnaMove">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Trudna (przesuwanie bloków)</string>
+   </property>
+  </action>
+  <action name="actionUpiorny">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Upiorny (podnoszenie, przesuwanie)</string>
    </property>
   </action>
  </widget>

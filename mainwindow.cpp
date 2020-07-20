@@ -18,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // -- set menu connections
     connect(ui->actionNowa_gra,SIGNAL(triggered()), this, SLOT(clickNowaGra()));
+    connect(ui->action_Latwa,SIGNAL(triggered()), this, SLOT(clickLatwa()));
+    connect(ui->actionTrudnaUP,SIGNAL(triggered()), this, SLOT(clickTrudnaUp()));
+    connect(ui->actionTrudnaMove,SIGNAL(triggered()), this, SLOT(clickTrudnaMove()));
+    connect(ui->actionUpiorny,SIGNAL(triggered()), this, SLOT(clickUpiorna()));
 
     // -- set shortCut connections
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
@@ -62,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
     gameover = false;
     pause = false;
     pointScore = 0;
+    difficultyLevel = 0;    //easy
+    difficultyLevelCounter = 0;
     showBoard();
     showShape();
 }
@@ -255,6 +261,7 @@ void MainWindow::clickNowaGra()
     gameover = false;
     pause = false;
     pointScore = 0;
+    difficultyLevelCounter = 0;
     board.clearBoard();
     shape.newShape();
     timer.start();
@@ -262,6 +269,74 @@ void MainWindow::clickNowaGra()
     showShape();
     showScores();
     repaint();
+}
+
+void MainWindow::clickLatwa()
+{
+    ui->action_Latwa->blockSignals(true);
+    ui->action_Latwa->setChecked(true);
+    ui->action_Latwa->blockSignals(false);
+    ui->actionTrudnaUP->blockSignals(true);
+    ui->actionTrudnaUP->setChecked(false);
+    ui->actionTrudnaUP->blockSignals(false);
+    ui->actionTrudnaMove->blockSignals(true);
+    ui->actionTrudnaMove->setChecked(false);
+    ui->actionTrudnaMove->blockSignals(false);
+    ui->actionUpiorny->blockSignals(true);
+    ui->actionUpiorny->setChecked(false);
+    ui->actionUpiorny->blockSignals(false);
+    difficultyLevel = 0;    //set easy
+}
+
+void MainWindow::clickTrudnaUp()
+{
+    ui->actionTrudnaUP->blockSignals(true);
+    ui->actionTrudnaUP->setChecked(true);
+    ui->actionTrudnaUP->blockSignals(false);
+    ui->action_Latwa->blockSignals(true);
+    ui->action_Latwa->setChecked(false);
+    ui->action_Latwa->blockSignals(false);
+    ui->actionTrudnaMove->blockSignals(true);
+    ui->actionTrudnaMove->setChecked(false);
+    ui->actionTrudnaMove->blockSignals(false);
+    ui->actionUpiorny->blockSignals(true);
+    ui->actionUpiorny->setChecked(false);
+    ui->actionUpiorny->blockSignals(false);
+    difficultyLevel = 1;    //set hard up
+}
+
+void MainWindow::clickTrudnaMove()
+{
+    ui->actionTrudnaMove->blockSignals(true);
+    ui->actionTrudnaMove->setChecked(true);
+    ui->actionTrudnaMove->blockSignals(false);
+    ui->actionTrudnaUP->blockSignals(true);
+    ui->actionTrudnaUP->setChecked(false);
+    ui->actionTrudnaUP->blockSignals(false);
+    ui->action_Latwa->blockSignals(true);
+    ui->action_Latwa->setChecked(false);
+    ui->action_Latwa->blockSignals(false);
+    ui->actionUpiorny->blockSignals(true);
+    ui->actionUpiorny->setChecked(false);
+    ui->actionUpiorny->blockSignals(false);
+    difficultyLevel = 2;    //set hard move
+}
+
+void MainWindow::clickUpiorna()
+{
+    ui->actionUpiorny->blockSignals(true);
+    ui->actionUpiorny->setChecked(true);
+    ui->actionUpiorny->blockSignals(false);
+    ui->actionTrudnaMove->blockSignals(true);
+    ui->actionTrudnaMove->setChecked(false);
+    ui->actionTrudnaMove->blockSignals(false);
+    ui->actionTrudnaUP->blockSignals(true);
+    ui->actionTrudnaUP->setChecked(false);
+    ui->actionTrudnaUP->blockSignals(false);
+    ui->action_Latwa->blockSignals(true);
+    ui->action_Latwa->setChecked(false);
+    ui->action_Latwa->blockSignals(false);
+    difficultyLevel = 3;    //set very hard
 }
 
 void MainWindow::step()
@@ -286,6 +361,13 @@ void MainWindow::step()
         sound.click();
         merge();    // merge the board and shape
         shape.newShape();
+        //---- easy / hard change the board
+        difficultyLevelCounter++;
+        if (difficultyLevelCounter==10)
+        {
+            difficultyLevelCounter = 0;
+            changeTheBoards();
+        }
 
         //---- its gameover?
         for (unsigned short int y=0; y<shape.row(); y++)
@@ -380,7 +462,7 @@ void MainWindow::calculate()
         isFullRow = true;
         for (unsigned short int x=0; x<10; x++)
         {
-            if (board.getBoard(y,x)==0 || (board.getBoard(y,x)==2 && board.getBoard(y+1,x)==0))
+            if (board.getBoard(y,x)==0 || (board.getBoard(y,x)==2 && isEndOfFalling(y,x)==false))
             {
                 isFullRow = false;
             }
@@ -568,4 +650,9 @@ void MainWindow::clickEsc()
     showShape();
     showScores();
     repaint();
+}
+
+void MainWindow::changeTheBoards()
+{
+
 }

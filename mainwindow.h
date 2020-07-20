@@ -47,7 +47,9 @@ private:
     Shape shape;
     MySounds sound;
     Scores score;
-    unsigned short int pointScore;
+    unsigned long int pointScore;
+    uint8_t difficultyLevel;            // 0-easy 1-hardUP 2-hardMove
+    uint8_t difficultyLevelCounter;     // if 10 shape then go
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
     void showBoard();
     void showShape();
@@ -59,6 +61,7 @@ private:
     void calculate();   // calculate the board. whether the sand is to fall and when there are whole rows.
     void calculateScores(); // calculate the scores (show 100 etc)
     bool isEndOfFalling(unsigned short y, unsigned short x);
+    void changeTheBoards();
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -66,6 +69,10 @@ protected:
 private slots:
     // -- menu
     void clickNowaGra();
+    void clickLatwa();
+    void clickTrudnaUp();
+    void clickTrudnaMove();
+    void clickUpiorna();
 
     // - timer
     void stepTimer();
