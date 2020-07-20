@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>558</width>
+    <width>509</width>
     <height>736</height>
    </rect>
   </property>
@@ -30,9 +30,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>360</x>
       <y>50</y>
-      <width>131</width>
+      <width>141</width>
       <height>21</height>
      </rect>
     </property>
@@ -56,13 +56,55 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>90</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Stopień trudności :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>110</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>łatwy</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>558</width>
+     <width>509</width>
      <height>26</height>
     </rect>
    </property>
@@ -75,8 +117,8 @@
       <string>Stopień trudności</string>
      </property>
      <addaction name="action_Latwa"/>
-     <addaction name="actionTrudnaUP"/>
      <addaction name="actionTrudnaMove"/>
+     <addaction name="actionTrudnaUP"/>
      <addaction name="actionUpiorny"/>
     </widget>
     <addaction name="actionNowa_gra"/>

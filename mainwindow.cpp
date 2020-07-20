@@ -261,6 +261,7 @@ void MainWindow::clickNowaGra()
     gameover = false;
     pause = false;
     pointScore = 0;
+    ui->label_2->setText("0");
     difficultyLevelCounter = 0;
     board.clearBoard();
     shape.newShape();
@@ -286,6 +287,7 @@ void MainWindow::clickLatwa()
     ui->actionUpiorny->setChecked(false);
     ui->actionUpiorny->blockSignals(false);
     difficultyLevel = 0;    //set easy
+    ui->label_4->setText("łatwy");
 }
 
 void MainWindow::clickTrudnaUp()
@@ -303,6 +305,7 @@ void MainWindow::clickTrudnaUp()
     ui->actionUpiorny->setChecked(false);
     ui->actionUpiorny->blockSignals(false);
     difficultyLevel = 1;    //set hard up
+    ui->label_4->setText("trudny up (+1500)");
 }
 
 void MainWindow::clickTrudnaMove()
@@ -320,6 +323,7 @@ void MainWindow::clickTrudnaMove()
     ui->actionUpiorny->setChecked(false);
     ui->actionUpiorny->blockSignals(false);
     difficultyLevel = 2;    //set hard move
+    ui->label_4->setText("trudny left (+1000)");
 }
 
 void MainWindow::clickUpiorna()
@@ -337,6 +341,7 @@ void MainWindow::clickUpiorna()
     ui->action_Latwa->setChecked(false);
     ui->action_Latwa->blockSignals(false);
     difficultyLevel = 3;    //set very hard
+    ui->label_4->setText("upiorny (+3200)");
 }
 
 void MainWindow::step()
@@ -361,11 +366,35 @@ void MainWindow::step()
         sound.click();
         merge();    // merge the board and shape
         shape.newShape();
+
         //---- easy / hard change the board
         difficultyLevelCounter++;
         if (difficultyLevelCounter==10)
         {
             difficultyLevelCounter = 0;
+            switch (difficultyLevel) {
+                case 1 : {
+                    score.add(19,4,"500");
+                    score.add(19,5,"500");
+                    score.add(19,6,"500");
+                    pointScore+=1500;
+                    break;
+                }
+                case 2 : {
+                    score.add(19,4,"500");
+                    score.add(19,5,"500");
+                    pointScore+=1000;
+                    break;
+                }
+                case 3 : {
+                    score.add(19,3,"800");
+                    score.add(19,4,"800");
+                    score.add(19,5,"800");
+                    score.add(19,6,"800");
+                    pointScore+=3200;
+                    break;
+                }
+            }
             changeTheBoards();
         }
 
