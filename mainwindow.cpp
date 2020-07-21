@@ -369,7 +369,7 @@ void MainWindow::step()
 
         //---- easy / hard change the board
         difficultyLevelCounter++;
-        if (difficultyLevelCounter==10)
+        if (difficultyLevelCounter==20)
         {
             difficultyLevelCounter = 0;
             switch (difficultyLevel) {
@@ -683,5 +683,30 @@ void MainWindow::clickEsc()
 
 void MainWindow::changeTheBoards()
 {
+    // -- go up when difficultyLevel = TrudnyUp or Upiorny
+    if (difficultyLevel==1 || difficultyLevel==3)
+    {
+        for (unsigned short int y=0; y<19 ; y++)
+        {
+            for (unsigned short int x=0; x<10 ; x++)
+            {
+                board.setBoard(y,x,board.getBoard(y+1,x));
+            }
+        }
+        bool noZero=true;
+        uint8_t random;
+        while (noZero)
+        {
+            for (unsigned short int x=0; x<10 ; x++)
+            {
+                random = rand()%5==0?0:rand()%2+1;
+                if (random==0)
+                {
+                    noZero = false;
+                }
+                board.setBoard(19,x,random);
+            }
+        }
+    }
 
 }
