@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QtDebug>
 
 // QString mySprintf(format, arguments);
 template<typename ... Args>
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTrudnaUP,SIGNAL(triggered()), this, SLOT(clickTrudnaUp()));
     connect(ui->actionTrudnaMove,SIGNAL(triggered()), this, SLOT(clickTrudnaMove()));
     connect(ui->actionUpiorny,SIGNAL(triggered()), this, SLOT(clickUpiorna()));
+    connect(ui->actionO_aplikacji,SIGNAL(triggered()), this, SLOT(clickOAplikacji()));
 
     // -- set shortCut connections
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
@@ -369,7 +371,7 @@ void MainWindow::step()
 
         //---- easy / hard change the board
         difficultyLevelCounter++;
-        if (difficultyLevelCounter==20)
+        if (difficultyLevelCounter==10)
         {
             difficultyLevelCounter = 0;
             switch (difficultyLevel) {
@@ -681,6 +683,14 @@ void MainWindow::clickEsc()
     repaint();
 }
 
+void MainWindow::clickOAplikacji()
+{
+    QSettings settings("MaxHebda", "TertisMax");
+//    settings.setValue("wyniki/01","1200");
+    qDebug() << settings.value("wyniki/01").toString();
+    qDebug() << settings.fileName();
+}
+
 void MainWindow::changeTheBoards()
 {
     // -- go up when difficultyLevel = TrudnyUp or Upiorny
@@ -709,4 +719,18 @@ void MainWindow::changeTheBoards()
         }
     }
 
+    // -- go up when difficultyLevel = TrudnyMove or Upiorny
+    if (difficultyLevel==2 || difficultyLevel==3)
+    {
+        unsigned short int tmp;
+        for (unsigned short int y=0; y<20 ; y++)
+        {
+            tmp = board.getBoard(y,0);
+            for (unsigned short int x=0; x<9 ; x++)
+            {
+                board.setBoard(y,x,board.getBoard(y,x+1));
+            }
+            board.setBoard(y,9,tmp);
+        }
+    }
 }

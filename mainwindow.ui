@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>TetrisMax</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -129,6 +129,9 @@
     <property name="title">
      <string>Info</string>
     </property>
+    <addaction name="actionNajlepsze_wyniki"/>
+    <addaction name="actionJak_grac"/>
+    <addaction name="actionO_aplikacji"/>
    </widget>
    <addaction name="menuGra"/>
    <addaction name="menuInfo"/>
@@ -174,6 +177,21 @@
    </property>
    <property name="text">
     <string>Upiorny (podnoszenie, przesuwanie)</string>
+   </property>
+  </action>
+  <action name="actionNajlepsze_wyniki">
+   <property name="text">
+    <string>Najlepsze wyniki</string>
+   </property>
+  </action>
+  <action name="actionJak_grac">
+   <property name="text">
+    <string>Jak grać?</string>
+   </property>
+  </action>
+  <action name="actionO_aplikacji">
+   <property name="text">
+    <string>O aplikacji</string>
    </property>
   </action>
  </widget>

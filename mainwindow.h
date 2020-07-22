@@ -11,6 +11,7 @@
 #include <QShortcut>
 #include <mysounds.h>
 #include <scores.h>
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -73,6 +74,7 @@ private slots:
     void clickTrudnaUp();
     void clickTrudnaMove();
     void clickUpiorna();
+    void clickOAplikacji();
 
     // - timer
     void stepTimer();
