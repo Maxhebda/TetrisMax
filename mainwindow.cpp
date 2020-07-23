@@ -685,10 +685,9 @@ void MainWindow::clickEsc()
 
 void MainWindow::clickOAplikacji()
 {
-    QSettings settings("MaxHebda", "TertisMax");
-//    settings.setValue("wyniki/01","1200");
-    qDebug() << settings.value("wyniki/01").toString();
-    qDebug() << settings.fileName();
+    savedScores.save();
+    savedScores.load();
+    ui->label_4->setText(savedScores.getName(10));
 }
 
 void MainWindow::changeTheBoards()

@@ -19,6 +19,7 @@ SOURCES += \
     board.cpp \
     main.cpp \
     mainwindow.cpp \
+    myregistry.cpp \
     mysounds.cpp \
     scores.cpp \
     shape.cpp
@@ -26,6 +27,7 @@ SOURCES += \
 HEADERS += \
     board.h \
     mainwindow.h \
+    myregistry.h \
     mysounds.h \
     scores.h \
     shape.h

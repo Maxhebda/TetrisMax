@@ -11,7 +11,7 @@
 #include <QShortcut>
 #include <mysounds.h>
 #include <scores.h>
-#include <QSettings>
+#include <myregistry.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,7 +48,8 @@ private:
     Shape shape;
     MySounds sound;
     Scores score;
-    unsigned long int pointScore;
+    MyRegistry savedScores;     // recorded results in the register, saving and reading
+    unsigned int pointScore;
     uint8_t difficultyLevel;            // 0-easy 1-hardUP 2-hardMove
     uint8_t difficultyLevelCounter;     // if 10 shape then go
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);
