@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QtDebug>
+#include "QtDebug"
 
 // QString mySprintf(format, arguments);
 template<typename ... Args>
@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    bestResultsWindows = new MainWindow2(this);
+    bestResultsWindows->setWindowFlag(Qt::WindowFullscreenButtonHint);
 
     // -- set menu connections
     connect(ui->actionNowa_gra,SIGNAL(triggered()), this, SLOT(clickNowaGra()));
@@ -75,6 +77,8 @@ MainWindow::MainWindow(QWidget *parent)
 }
 MainWindow::~MainWindow()
 {
+    delete bestResultsWindows;
+    qDebug() << "dest";
     paintOnImage->end();
     delete shSPACE;
     delete shRIGHT;
@@ -685,9 +689,11 @@ void MainWindow::clickEsc()
 
 void MainWindow::clickOAplikacji()
 {
-    savedScores.save();
-    savedScores.load();
-    ui->label_4->setText(savedScores.getName(10));
+    bestResultsWindows->show();
+
+//        savedScores.save();
+    //    savedScores.load();
+    //    ui->label_4->setText(savedScores.getName(10));
 }
 
 void MainWindow::changeTheBoards()

@@ -12,6 +12,8 @@
 #include <mysounds.h>
 #include <scores.h>
 #include <myregistry.h>
+#include "mainwindow2.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -64,6 +66,7 @@ private:
     void calculateScores(); // calculate the scores (show 100 etc)
     bool isEndOfFalling(unsigned short y, unsigned short x);
     void changeTheBoards();
+    MainWindow2 * bestResultsWindows;       //window with the best results / new window form
 
 protected:
     void paintEvent(QPaintEvent *);

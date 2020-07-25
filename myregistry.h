@@ -8,7 +8,7 @@
 
 struct MyData{
     QString name;
-    unsigned int pointScore;
+    qulonglong pointScore;
 };
 
 class MyRegistry
@@ -18,10 +18,12 @@ public:
     ~MyRegistry();
     void load();
     void save();
+    void resetScores();
     QString getName(uint8_t index);
     unsigned long int getScore(uint8_t index);
     void set(QString key, QString value);
 private:
+    void reset();
     QVector<MyData> dataScore;
     QSettings * settings;
 };

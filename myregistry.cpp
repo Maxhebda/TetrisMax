@@ -12,16 +12,7 @@ QString mySprintf(const char * format,Args ... a)
 MyRegistry::MyRegistry()
 {
     settings = new QSettings("MaxHebda", "TertisMax");
-    if (dataScore.isEmpty())
-    {
-        MyData tmp;
-        for (uint8_t i=0; i<10 ; i++)
-        {
-            tmp.name = "---";
-            tmp.pointScore = 0;
-            dataScore.push_back(tmp);
-        }
-    }
+    reset();
 }
 
 MyRegistry::~MyRegistry()
@@ -36,7 +27,7 @@ void MyRegistry::load()
     for (uint8_t i=0; i<10 ; i++)
     {
         tmp.name = settings->value(mySprintf("wyniki/%d/name",i+1),"---").toString();
-        tmp.pointScore = settings->value(mySprintf("wyniki/%d/score",i+1),0).toUInt();
+        tmp.pointScore = settings->value(mySprintf("wyniki/%d/score",i+1),0).toULongLong();
         dataScore.push_back(tmp);
     }
 }
@@ -69,4 +60,22 @@ unsigned long int MyRegistry::getScore(uint8_t index)
     }
     else
         return 0;
+}
+
+void MyRegistry::reset()
+{
+    dataScore.clear();
+    MyData tmp;
+    for (uint8_t i=0; i<10 ; i++)
+    {
+        tmp.name = "---";
+        tmp.pointScore = 0; //max 4294967295
+        dataScore.push_back(tmp);
+    }
+}
+
+void MyRegistry::resetScores()
+{
+    reset();
+    save();
 }

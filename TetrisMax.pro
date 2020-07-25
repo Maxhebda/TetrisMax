@@ -19,6 +19,7 @@ SOURCES += \
     board.cpp \
     main.cpp \
     mainwindow.cpp \
+    mainwindow2.cpp \
     myregistry.cpp \
     mysounds.cpp \
     scores.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     board.h \
     mainwindow.h \
+    mainwindow2.h \
     myregistry.h \
     mysounds.h \
     scores.h \
@@ -34,7 +36,8 @@ HEADERS += \
 
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    mainwindow2.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
