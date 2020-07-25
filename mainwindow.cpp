@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QtDebug"
 
 // QString mySprintf(format, arguments);
 template<typename ... Args>
@@ -26,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTrudnaMove,SIGNAL(triggered()), this, SLOT(clickTrudnaMove()));
     connect(ui->actionUpiorny,SIGNAL(triggered()), this, SLOT(clickUpiorna()));
     connect(ui->actionO_aplikacji,SIGNAL(triggered()), this, SLOT(clickOAplikacji()));
+    connect(ui->actionNajlepsze_wyniki,SIGNAL(triggered()), this, SLOT(clickWyniki()));
 
     // -- set shortCut connections
     shSPACE  = new QShortcut(QKeySequence(Qt::Key_Space),this,SLOT(clickSpace()));
@@ -78,7 +78,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete bestResultsWindows;
-    qDebug() << "dest";
     paintOnImage->end();
     delete shSPACE;
     delete shRIGHT;
@@ -689,11 +688,13 @@ void MainWindow::clickEsc()
 
 void MainWindow::clickOAplikacji()
 {
-    bestResultsWindows->show();
 
-//        savedScores.save();
-    //    savedScores.load();
-    //    ui->label_4->setText(savedScores.getName(10));
+}
+
+void MainWindow::clickWyniki()
+{
+    bestResultsWindows->show();
+    savedScores.load();
 }
 
 void MainWindow::changeTheBoards()

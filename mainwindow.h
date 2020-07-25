@@ -79,6 +79,7 @@ private slots:
     void clickTrudnaMove();
     void clickUpiorna();
     void clickOAplikacji();
+    void clickWyniki();
 
     // - timer
     void stepTimer();
