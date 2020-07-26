@@ -22,6 +22,7 @@ MyRegistry::~MyRegistry()
 
 void MyRegistry::load()
 {
+    settings->sync();
     dataScore.clear();
     MyData tmp;
     for (uint8_t i=0; i<10 ; i++)
@@ -44,6 +45,8 @@ void MyRegistry::save()
 
 QString MyRegistry::getName(uint8_t index)
 {
+    settings->sync();
+    load();
     if (index<dataScore.size())
     {
         return dataScore[index].name;
@@ -91,7 +94,6 @@ void MyRegistry::add(qulonglong newBestPointScore, QString name)
             dataScore.insert(i,tmp);
             dataScore.remove(10);
             save();
-            load();
             break;
         }
     }

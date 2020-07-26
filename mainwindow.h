@@ -95,7 +95,7 @@ private slots:
     void clickLeft();
     void clickDown();
     void clickEsc();    // pause
-    void on_pushButton_2_clicked();
-    void on_pushButton_clicked();
+    void on_pushButton_2_clicked(); // click "anuluj" on write name window
+    void on_pushButton_clicked();   // click "zapisz" on write name window
 };
 #endif // MAINWINDOW_H

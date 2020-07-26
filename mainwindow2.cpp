@@ -22,18 +22,26 @@ MainWindow2::MainWindow2(QWidget *parent) :
     for (uint8_t i=0;i<10;i++)
     {
         myLabel[i] = new QLabel(this);
-        myLabel[i]->setText(mySprintf("%02d.",i+1));
         myLabel[i]->setGeometry(10,20*i+10,30,20);
 
         myLabel[i+10] = new QLabel(this);
-        myLabel[i+10]->setText(savedScores.getName(i));
         myLabel[i+10]->setGeometry(40,20*i+10,120,20);
         myLabel[i+10]->setAlignment(Qt::AlignRight);
 
         myLabel[i+20] = new QLabel(this);
-        myLabel[i+20]->setText(mySprintf("% 9llu",savedScores.getScore(i)));    // %llu - unsigned long long
         myLabel[i+20]->setGeometry(170,20*i+10,100,20);
         myLabel[i+20]->setAlignment(Qt::AlignRight);
+    }
+    refresh();
+}
+
+void MainWindow2::refresh()
+{
+    for (uint8_t i=0;i<10;i++)
+    {
+        myLabel[i]->setText(mySprintf("%02d.",i+1));
+        myLabel[i+10]->setText(savedScores.getName(i));
+        myLabel[i+20]->setText(mySprintf("% 9llu",savedScores.getScore(i)));    // %llu - unsigned long long
     }
 }
 
@@ -45,7 +53,6 @@ MainWindow2::~MainWindow2()
     }
     delete ui;
 }
-
 
 void MainWindow2::on_pushButton_2_clicked()
 {

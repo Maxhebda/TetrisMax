@@ -753,6 +753,7 @@ void MainWindow::clickOAplikacji()
 
 void MainWindow::clickWyniki()
 {
+    bestResultsWindows->refresh();
     bestResultsWindows->show();
     savedScores.load();
 }
