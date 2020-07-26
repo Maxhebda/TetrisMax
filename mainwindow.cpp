@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     bestResultsWindows = new MainWindow2(this);
     bestResultsWindows->setWindowFlag(Qt::WindowFullscreenButtonHint);
+    savedScores.load();         // refresh hight score from registry
     writeNameIfYouWin(false);   // reset write name window
 
     // -- set menu connections
@@ -268,6 +269,7 @@ void MainWindow::stepTimer()
 
 void MainWindow::clickNowaGra()
 {
+    blockAppforWriteName = false;
     gameover = false;
     pause = false;
     pointScore = 0;
@@ -558,25 +560,30 @@ void MainWindow::writeNameIfYouWin(bool show)
     if (show==false)
     {
         blockAppforWriteName = false;
+        ui->label_5->setStyleSheet("QLabel { color : white; }");
         ui->label_5->setVisible(false);
         ui->pushButton->setVisible(false);
         ui->pushButton_2->setVisible(false);
         ui->lineEdit->setVisible(false);
+        ui->lineEdit->setEnabled(false);
         return;
     }
 
-    for (uint8_t var = 0; var < 10; ++var) {
+    for (uint8_t var = 0; var < 10; var++) {
         if (pointScore>savedScores.getScore(var))
         {
-            // add new scores
+            // if is new best scores
             const QRect rectangle = QRect(75, 355, 207, 120);
             paintOnImage->fillRect(rectangle,QColor(055,055,055));
             ui->lineEdit->setText("gracz");
             ui->lineEdit->setSelection(0,5);
             ui->label_5->setVisible(true);
+            ui->label_5->setText(mySprintf("Brawo! %d miejsce. Wpisz imię :", var+1));
             ui->pushButton->setVisible(true);
             ui->pushButton_2->setVisible(true);
             ui->lineEdit->setVisible(true);
+            ui->lineEdit->setEnabled(true);
+            ui->lineEdit->selectionChanged();
             break;
         }
     }
@@ -808,6 +815,7 @@ void MainWindow::on_pushButton_2_clicked()  // click Anuluj in "write name windo
 
 void MainWindow::on_pushButton_clicked()    // click Zapisz in "write name windows"
 {
+    savedScores.add(pointScore,ui->lineEdit->text());
     writeNameIfYouWin(false);
     score.clear();
     timer.stop();

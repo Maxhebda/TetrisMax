@@ -51,7 +51,7 @@ private:
     MySounds sound;
     Scores score;
     MyRegistry savedScores;     // recorded results in the register, saving and reading
-    unsigned int pointScore;
+    qulonglong pointScore;
     uint8_t difficultyLevel;            // 0-easy 1-hardUP 2-hardMove
     uint8_t difficultyLevelCounter;     // if 10 shape then go
     void showCell(unsigned short y, unsigned short x, unsigned short index, bool blueFrame);

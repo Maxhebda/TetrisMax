@@ -52,7 +52,7 @@ QString MyRegistry::getName(uint8_t index)
         return "---";
 }
 
-unsigned long int MyRegistry::getScore(uint8_t index)
+qulonglong MyRegistry::getScore(uint8_t index)
 {
     if (index<dataScore.size())
     {
@@ -78,4 +78,21 @@ void MyRegistry::resetScores()
 {
     reset();
     save();
+}
+
+void MyRegistry::add(qulonglong newBestPointScore, QString name)
+{
+    for (uint8_t i = 0; i < 10; i++) {
+        if (newBestPointScore>dataScore[i].pointScore)
+        {
+            MyData tmp;
+            tmp.name = name;
+            tmp.pointScore = newBestPointScore;
+            dataScore.insert(i,tmp);
+            dataScore.remove(10);
+            save();
+            load();
+            break;
+        }
+    }
 }

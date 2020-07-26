@@ -20,8 +20,8 @@ public:
     void save();
     void resetScores();
     QString getName(uint8_t index);
-    unsigned long int getScore(uint8_t index);
-    void set(QString key, QString value);
+    qulonglong getScore(uint8_t index);
+    void add(qulonglong newBestPointScore, QString name);
 private:
     void reset();
     QVector<MyData> dataScore;
