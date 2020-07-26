@@ -112,3 +112,8 @@ void Scores::go()
         score.remove(*i);
     }
 }
+
+void Scores::clear()
+{
+    score.clear();
+}

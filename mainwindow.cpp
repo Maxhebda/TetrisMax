@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     bestResultsWindows = new MainWindow2(this);
     bestResultsWindows->setWindowFlag(Qt::WindowFullscreenButtonHint);
+    writeNameIfYouWin(false);   // reset write name window
 
     // -- set menu connections
     connect(ui->actionNowa_gra,SIGNAL(triggered()), this, SLOT(clickNowaGra()));
@@ -247,6 +248,10 @@ void MainWindow::showScores()
 
 void MainWindow::stepTimer()
 {
+    if (blockAppforWriteName)
+    {
+        return;
+    }
     timerCounter++;
     calculateScores();
     if (timerCounter%2==0)
@@ -351,7 +356,7 @@ void MainWindow::clickUpiorna()
 
 void MainWindow::step()
 {
-    if (gameover)
+    if (gameover || blockAppforWriteName)
     {
         return;
     }
@@ -426,6 +431,11 @@ void MainWindow::step()
     showBoard();
     showShape();
     showScores();
+    if (gameover)
+    {
+        writeNameIfYouWin(true);
+        blockAppforWriteName = true;
+    }
     repaint();
 }
 
@@ -543,8 +553,42 @@ void MainWindow::calculateScores()
     repaint();
 }
 
+void MainWindow::writeNameIfYouWin(bool show)
+{
+    if (show==false)
+    {
+        blockAppforWriteName = false;
+        ui->label_5->setVisible(false);
+        ui->pushButton->setVisible(false);
+        ui->pushButton_2->setVisible(false);
+        ui->lineEdit->setVisible(false);
+        return;
+    }
+
+    for (uint8_t var = 0; var < 10; ++var) {
+        if (pointScore>savedScores.getScore(var))
+        {
+            // add new scores
+            const QRect rectangle = QRect(75, 355, 207, 120);
+            paintOnImage->fillRect(rectangle,QColor(055,055,055));
+            ui->lineEdit->setText("gracz");
+            ui->lineEdit->setSelection(0,5);
+            ui->label_5->setVisible(true);
+            ui->pushButton->setVisible(true);
+            ui->pushButton_2->setVisible(true);
+            ui->lineEdit->setVisible(true);
+            break;
+        }
+    }
+}
+
 void MainWindow::clickSpace()
 {
+    if (gameover || blockAppforWriteName)
+    {
+        return;
+    }
+
     if (timer.isActive()==false)
     {
         timer.start();
@@ -597,6 +641,11 @@ void MainWindow::clickSpace()
 
 void MainWindow::clickRight()
 {
+    if (gameover || blockAppforWriteName)
+    {
+        return;
+    }
+
     bool allowRight = true;
     for (unsigned short int y=0; y<shape.row(); y++)
     {
@@ -622,6 +671,10 @@ void MainWindow::clickRight()
 
 void MainWindow::clickLeft()
 {
+    if (gameover || blockAppforWriteName)
+    {
+        return;
+    }
     bool allowLeft = true;
     for (unsigned short int y=0; y<shape.row(); y++)
     {
@@ -647,7 +700,7 @@ void MainWindow::clickLeft()
 
 void MainWindow::clickDown()
 {
-    if (gameover)
+    if (gameover || blockAppforWriteName)
     {
         return;
     }
@@ -665,7 +718,7 @@ void MainWindow::clickDown()
 
 void MainWindow::clickEsc()
 {
-    if (gameover)
+    if (gameover || blockAppforWriteName)
     {
         return;
     }
@@ -739,4 +792,28 @@ void MainWindow::changeTheBoards()
             board.setBoard(y,9,tmp);
         }
     }
+}
+
+void MainWindow::on_pushButton_2_clicked()  // click Anuluj in "write name windows"
+{
+    writeNameIfYouWin(false);
+    score.clear();
+    timer.stop();
+
+    showBoard();
+    showShape();
+    showScores();
+    repaint();
+}
+
+void MainWindow::on_pushButton_clicked()    // click Zapisz in "write name windows"
+{
+    writeNameIfYouWin(false);
+    score.clear();
+    timer.stop();
+
+    showBoard();
+    showShape();
+    showScores();
+    repaint();
 }

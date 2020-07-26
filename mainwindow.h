@@ -65,8 +65,13 @@ private:
     void calculate();   // calculate the board. whether the sand is to fall and when there are whole rows.
     void calculateScores(); // calculate the scores (show 100 etc)
     bool isEndOfFalling(unsigned short y, unsigned short x);
-    void changeTheBoards();
-    MainWindow2 * bestResultsWindows;       //window with the best results / new window form
+    void changeTheBoards();     // level of difficulty
+
+    // write name window
+    void writeNameIfYouWin(bool show);
+    bool blockAppforWriteName;
+
+    MainWindow2 * bestResultsWindows;       // window with the best results / new window form
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -90,5 +95,7 @@ private slots:
     void clickLeft();
     void clickDown();
     void clickEsc();    // pause
+    void on_pushButton_2_clicked();
+    void on_pushButton_clicked();
 };
 #endif // MAINWINDOW_H

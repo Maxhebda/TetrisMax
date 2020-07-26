@@ -21,6 +21,7 @@ public:
     void add(short int y, short int x, QString value);
     unsigned short int size();
     void go();
+    void clear();
 
     unsigned short int getX(unsigned short int index);
     unsigned short int getY(unsigned short int index);
