@@ -7,5 +7,6 @@
         <file>sounds/row.wav</file>
         <file>sounds/sand.wav</file>
         <file>sounds/shape.wav</file>
+        <file>img/tetrismsg.png</file>
     </qresource>
 </RCC>

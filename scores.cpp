@@ -45,7 +45,7 @@ unsigned short int Scores::size()
 
 unsigned short int Scores::getX(unsigned short int index)
 {
-    if (score.size()==0 || index<0 || index>=score.size())
+    if (score.size()==0 || index>=score.size())
     {
         return -1;
     }
@@ -54,7 +54,7 @@ unsigned short int Scores::getX(unsigned short int index)
 
 unsigned short int Scores::getY(unsigned short int index)
 {
-    if (score.size()==0 || index<0 || index>=score.size())
+    if (score.size()==0 || index>=score.size())
     {
         return -1;
     }
@@ -63,7 +63,7 @@ unsigned short int Scores::getY(unsigned short int index)
 
 QString Scores::getValue(unsigned short int index)
 {
-    if (score.size()==0 || index<0 || index>=score.size())
+    if (score.size()==0 || index>=score.size())
     {
         return "";
     }

@@ -583,7 +583,7 @@ void MainWindow::writeNameIfYouWin(bool show)
             ui->pushButton_2->setVisible(true);
             ui->lineEdit->setVisible(true);
             ui->lineEdit->setEnabled(true);
-            ui->lineEdit->selectionChanged();
+            ui->lineEdit->setFocus();
             break;
         }
     }
@@ -748,7 +748,12 @@ void MainWindow::clickEsc()
 
 void MainWindow::clickOAplikacji()
 {
-
+    QMessageBox msgBox;
+    msgBox.setIconPixmap(QPixmap(":/img/tetrismsg.png"));
+    msgBox.setDetailedText("Gra powstała dla zabawy :)\n\nNie jest to zwykły tetris jaki znamy. Spadające bloki składają się z kamieni i piasku. Bloki z piasku po zetknięciu z podłożem dalej spadają dając dodatkowe punkty. Możesz także grać na kilku poziomach trudności i zmieniać je w trakcie gry. Trudne poziomy dają oczywiście dodatkowe punkty.\nMiłej zabawy.");
+    msgBox.setWindowTitle("TetrisMax v1.0");
+    msgBox.setText("TetrisMax v1.0      (07.2020)\nminiProjekt/miniGra");
+    msgBox.exec();
 }
 
 void MainWindow::clickWyniki()

@@ -68,7 +68,7 @@ private:
     void changeTheBoards();     // level of difficulty
 
     // write name window
-    void writeNameIfYouWin(bool show);
+    void writeNameIfYouWin(bool show);  //show "write name" windows
     bool blockAppforWriteName;
 
     MainWindow2 * bestResultsWindows;       // window with the best results / new window form
