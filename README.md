@@ -8,7 +8,7 @@ Gra Tetris - układanie bloków
 * Możliwość zmiany trybu trudności w czasie gry
 * najlepsze wyniki zapisywane się w systemowym rejestrze
 
-##screen1 :
-![SokobanMax - Maksymilian Hebda](./projectScreenImage/TetrisMax1.png)
 ## screen1 :
+![SokobanMax - Maksymilian Hebda](./projectScreenImage/TetrisMax1.png)
+## screen2 :
 ![SokobanMax - Maksymilian Hebda](./projectScreenImage/TetrisMax2.png)
