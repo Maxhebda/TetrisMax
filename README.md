@@ -1,4 +1,6 @@
 # TetrisMax
+<img src="./projectScreenImage/TetrisMax1.png" width=150>
+
 ## Tetris game - stacking blocks
 * blocks consist of sand and stones
 * sand blocks do not stop when hitting a block, but fall lower if possible
@@ -18,8 +20,4 @@ Gra Tetris - układanie bloków
 * Możliwość zmiany trybu trudności w czasie gry
 * najlepsze wyniki zapisywane się w systemowym rejestrze
 
-
-## screen1 :
-![SokobanMax - Maksymilian Hebda](./projectScreenImage/TetrisMax1.png)
-## screen2 :
-![SokobanMax - Maksymilian Hebda](./projectScreenImage/TetrisMax2.png)
+<img src="./projectScreenImage/TetrisMax2.png" width=300>
