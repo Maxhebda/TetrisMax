@@ -1,6 +1,7 @@
 # TetrisMax
-<img src="./projectScreenImage/TetrisMax1.png" width=150>
+<img src="./projectScreenImage/TetrisMaxGif.gif" width=250>
 
+> Project in QT Creator C++
 ## Tetris game - stacking blocks
 * blocks consist of sand and stones
 * sand blocks do not stop when hitting a block, but fall lower if possible
@@ -9,6 +10,8 @@
 * 3 difficulty modes with different scores
 * Ability to change the difficulty mode during the game
 * the best results are saved in the system registry
+
+<img src="./projectScreenImage/TetrisMax1.png" width=250>
 
 PL :
 Gra Tetris - układanie bloków
